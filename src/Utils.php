@@ -16,7 +16,7 @@ class Utils {
 	 * @return void
 	 */
 	public static function mb_str_pad ($input, $pad_length, $pad_string=" ", $pad_style=STR_PAD_RIGHT, $encoding="UTF-8") {
-		$mb_pad_length = strlen($input) - mb_strlen($input, $encoding) + $pad_length;
+		$mb_pad_length = strlen($input) - \mb_strlen($input, $encoding) + $pad_length;
 		return str_pad($input, $mb_pad_length, $pad_string, $pad_style);
 	}
 

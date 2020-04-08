@@ -11,10 +11,15 @@ use takemi\games\battle\Charactor\Player;
 
 require_once './include.php';
 
+
+$args_monster_id = null;
+
 Cui::cls();
 
 echo "> アプリケーションを起動します...\n";
-
+echo "> CUI引数処理を実施\n";
+args_proc();
+echo "> データをロード\n";
 $player = new Player();
 
 echo "> プレイヤーデータの確認\n";
@@ -215,9 +220,18 @@ function InputNumber( $caption, $required = false , $max = false, $min = 0 ) {
 
 function battle() {
 	Global $player;
+	Global $args_monster_id;
+
 	//モンスターデータをロード
 	$monster = new Monster();
-	$monster->Load( 1 );
+
+	//モンスターをロード
+	if( $args_monster_id ) {
+		//引数指定がある場合は適応する
+		$monster->Load( $args_monster_id );
+	} else {
+		$monster->Load( 1 );
+	}
 
 	$message = new Messagebox();
 	$loop = true;
@@ -275,4 +289,24 @@ function getCommand() {
 		Cui::LineUp( 1 );
 	}
 	return $cmd;
+}
+
+/**
+ * 引数処理
+ * @return void
+ */
+function args_proc() {
+	Global $argv;
+	Global $args_monster_id;
+	if( count($argv) == 0 ) return;
+
+	for( $n = 0; $n < count($argv); $n ++ ){
+		if( !isset( $argv[$n] ) ) break;
+		switch( $argv[$n] ) {
+			case '-m':
+				$n ++;
+				$args_monster_id = $argv[$n] ?? null;
+				break;
+		}
+	}
 }

@@ -2,6 +2,8 @@
 namespace takemi\games\battle\Charactor;
 
 use takemi\games\battle\Utils;
+use takemi\games\battle\Cui;
+use takemi\games\battle\Messagebox;
 
 /**
  * プレイヤー情報
@@ -70,6 +72,8 @@ class Player extends Chara {
 			"ぼうぎょ",
 			"ためる　",
 		];
+
+		Cui::locate( 0, Messagebox::con_y );
 		echo "┌".Utils::mb_str_pad( "コマンド", ($disp_len*2)-6,"─", STR_PAD_BOTH)."┐\n";
 		foreach( $commands as $i => $node ) {
 			$node = ($i+1).".".$node;

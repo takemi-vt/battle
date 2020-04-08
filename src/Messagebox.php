@@ -3,15 +3,15 @@ namespace takemi\games\battle;
 
 class Messagebox {
 	protected const con_x = 21;
-	protected const con_y = 11;
+	public const con_y = 16;
 	protected const width = 40;
 	protected const height=6;
 
 	protected $list = [];
 
 	public function display(){
-		$bar = Utils::makeBar( 40 );
-		Cui::locate(21,11); echo "┌{$bar}┐";
+		$bar = Utils::makeBar( self::width );
+		Cui::locate(self::con_x,self::con_y); echo "┌{$bar}┐";
 		for( $n = 1; $n <= self::height; $n ++ ) {
 			$space = "";
 			if( isset($this->list[$n-1]) ) {
@@ -22,7 +22,7 @@ class Messagebox {
 			echo "│{$space}";
 			Cui::locate( self::con_x + self::width + 1, self::con_y + $n); echo "│";
 		}
-		Cui::locate(21,18); echo "└{$bar}┘";
+		Cui::locate(self::con_x, self::con_y + self::height ); echo "└{$bar}┘";
 	}
 	
 	public function Add( string $str ) {
