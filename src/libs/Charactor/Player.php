@@ -1,9 +1,9 @@
 <?php
-namespace takemi\games\battle\Charactor;
+namespace takemi\games\battle\libs\Charactor;
 
-use takemi\games\battle\Utils;
-use takemi\games\battle\Cui;
-use takemi\games\battle\Messagebox;
+use takemi\games\battle\libs\Utils;
+use takemi\games\battle\libs\Cui;
+use takemi\games\battle\libs\Messagebox;
 
 /**
  * プレイヤー情報

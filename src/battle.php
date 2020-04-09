@@ -5,11 +5,13 @@
  */
 namespace takemi\games\battle;
 
-use takemi\games\battle\Charactor\CharaStatus;
-use takemi\games\battle\Charactor\Monster;
-use takemi\games\battle\Charactor\Player;
+use takemi\games\battle\libs\Charactor\CharaStatus;
+use takemi\games\battle\libs\Charactor\Monster;
+use takemi\games\battle\libs\Charactor\Player;
+use takemi\games\battle\libs\Cui;
+use takemi\games\battle\libs\Messagebox;
 
-require_once './include.php';
+require_once './libs/include.php';
 
 
 $args_monster_id = null;

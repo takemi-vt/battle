@@ -1,5 +1,5 @@
 <?php
-namespace takemi\games\battle\Charactor;
+namespace takemi\games\battle\libs\Charactor;
 
 use takemi\games\battle\Messagebox;
 use JsonSerializable;

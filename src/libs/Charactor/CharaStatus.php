@@ -2,7 +2,7 @@
 /**
  * 
  */
-namespace takemi\games\battle\Charactor;
+namespace takemi\games\battle\libs\Charactor;
 
 use JsonSerializable;
 
@@ -110,9 +110,13 @@ class CharaStatus implements JsonSerializable{
 		$this->luk= $data['luk'];
 	}
 
+	/**
+	 * clr_countをデクリメントして0に成った場合、全ステータス値を0にする
+	 * @return boolean
+	 */
 	public function Clr() {
 		$this->clr_count --;
-		if( $this->clr_count >= 0 ) return;
+		if( $this->clr_count >= 0 ) return false;
 		$this->clr_count = 0;
 		$this->hp = 0;
 		$this->mp = 0;
@@ -122,6 +126,7 @@ class CharaStatus implements JsonSerializable{
 		$this->dex= 0;
 		$this->int= 0;
 		$this->luk= 0;
+		return true;
 	}
 	
 	/**
@@ -130,6 +135,42 @@ class CharaStatus implements JsonSerializable{
 	 */
 	public function jsonSerialize() {
 		return (array)$this;
+	}
+
+	/**
+	 * CharaStatusを加算
+	 * @param CharaStatus $val
+	 * @return CharaStatus
+	 */
+	public function Add( CharaStatus $val ) {
+		$ret = clone $this;
+		$ret->hp += $val->hp;
+		$ret->mp += $val->mp;
+		$ret->str+= $val->str;
+		$ret->vit+= $val->vit;
+		$ret->agi+= $val->agi;
+		$ret->dex+= $val->dex;
+		$ret->int+= $val->int;
+		$ret->luk+= $val->luk;
+		return $ret;
+	}
+
+	/**
+	 * CharaStatusを減算処理
+	 * @param CharaStatus $val
+	 * @return CharaStatus
+	 */
+	public function Dec( CharaStatus $val ) {
+		$ret = clone $this;
+		$ret->hp -= $val->hp;
+		$ret->mp -= $val->mp;
+		$ret->str-= $val->str;
+		$ret->vit-= $val->vit;
+		$ret->agi-= $val->agi;
+		$ret->dex-= $val->dex;
+		$ret->int-= $val->int;
+		$ret->luk-= $val->luk;
+		return $ret;
 	}
 
 }

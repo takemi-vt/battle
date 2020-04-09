@@ -1,5 +1,5 @@
 <?php
-namespace takemi\games\battle;
+namespace takemi\games\battle\libs;
 
 /**
  * CUI制御クラス
