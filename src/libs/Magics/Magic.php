@@ -28,6 +28,8 @@ class Magic {
 	 */
 	public $status = null;
 
+	public $damage = 0;
+
 	/**
 	 * JSONファイルから読み込み
 	 * @param string $path
@@ -38,7 +40,36 @@ class Magic {
 		$this->name = $tmp->name;
 		$this->type = new MagicType( $tmp->type );
 		$this->attribute = new MagicAttribute( (array)$tmp->attribute );
+		$this->damage = $tmp->damage ?? 0;
 		$this->status = new CharaStatus();
 		$this->status->SetArray( (array)$tmp->status );
+	}
+
+	/**
+	 * 魔法処理
+	 * @param Chara $src
+	 * @param Chara $trg
+	 * @param Messagebox $messagebox
+	 * @return void
+	 */
+	public function Command( Chara $src, Chara $trg, Messagebox $messagebox ) {
+		$messagebox->Add( $this->name.'を唱えた！' );
+		usleep( 50000 );
+		switch( $this->type ) {
+			case MagicType::attack:
+				$src->status->hp -= $this->damage;
+				$messagebox->Add( $trg->name.'に'.$this->damage.'のダメージ' );
+				break;
+
+			case MagicType::recovery:
+				$src->status->hp += $this->status->hp;
+				if( $src->status->hp > $src->native_status->hp ) $src->status->hp = $src->native_status->hp;
+				$messagebox->Add( $src->name.'は回復した' );
+				break;
+			
+			case MagicType::status:
+				break;
+		}
+		usleep( 50000 );
 	}
 }
