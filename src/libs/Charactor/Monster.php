@@ -1,7 +1,7 @@
 <?php
 namespace takemi\games\battle\libs\Charactor;
 
-use takemi\games\battle\Cui;
+use takemi\games\battle\libs\Cui;
 
 class Monster extends Chara {
 	const monster_path = "./data/";
