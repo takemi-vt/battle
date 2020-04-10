@@ -4,6 +4,7 @@ namespace takemi\games\battle\libs\Charactor;
 use takemi\games\battle\libs\Utils;
 use takemi\games\battle\libs\Cui;
 use takemi\games\battle\libs\Messagebox;
+use takemi\games\battle\libs\Magics\MagicList;
 
 /**
  * プレイヤー情報
@@ -11,6 +12,14 @@ use takemi\games\battle\libs\Messagebox;
 class Player extends Chara {
 
 	const player_file = './data/player.json';
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->magics = new MagicList();
+		$this->magics->Load();
+	}
 
 	/**
 	 * プレイヤー情報の有無の確認
@@ -32,7 +41,6 @@ class Player extends Chara {
 
 	public function Save() {
 		$data = json_encode( $this );
-		var_dump( $data );
 
 		file_put_contents( self::player_file, $data );
 	}
@@ -72,6 +80,10 @@ class Player extends Chara {
 			"ぼうぎょ",
 			"ためる　",
 		];
+
+		if( $this->magics->Has() ) {
+			$commands[] = "まほう　";
+		}
 
 		Cui::locate( 0, Messagebox::con_y );
 		echo "┌".Utils::mb_str_pad( "コマンド", ($disp_len*2)-6,"─", STR_PAD_BOTH)."┐\n";

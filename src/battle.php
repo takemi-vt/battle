@@ -252,7 +252,7 @@ function battle() {
 		$message->Add('コマンドを入力してください');
 		$message->display();
 		echo "\n";
-		$player->Command( getCommand(), $monster, $message );
+		$player->Command( getCommand( $player, $message ), $monster, $message );
 		if( $monster->isAlive() == false ) {
 			$loop = false;
 			usleep( 30000 );
@@ -282,13 +282,31 @@ function battle() {
  * ユーザからのコマンドを受け付ける
  * @return int
  */
-function getCommand() {
+function getCommand( Player $player, Messagebox $message ) {
 	$loop = true;
+	$max = 3;
+	if( $player->magics->Has() ) {
+		$max = 4;
+	}
+	$cmd = 0;
 	while( $loop ) {
 		$cmd = trim( fgets( STDIN ) );
-		if( 1 <= $cmd && $cmd <= 3 ) break;
-		Cui::strColor( "1 - 3 の間の数値を入力してください", 'red');
+		if( 1 <= $cmd && $cmd <= $max ) break;
+		Cui::strColor( "1 - {$max} の間の数値を入力してください", 'red');
 		Cui::LineUp( 1 );
+	}
+	//魔法の場合
+	if( $cmd == 4 ) {
+		$max = $player->magics->Has() + 1;
+		$mag = 0;
+		while( $loop ) {
+			$player->magics->display( $message );
+			$mag = trim( fgets( STDIN ) );
+			if( 1 <= $mag && $mag <= $max ) break;
+			Cui::strColor( "1 - {$max} の間の数値を入力してください", 'red');
+			Cui::LineUp( 1 );
+		}
+		$cmd = "{$cmd}:{$mag}";
 	}
 	return $cmd;
 }

@@ -1,6 +1,9 @@
 <?php
 namespace takemi\games\battle\libs;
 
+/**
+ * メッセージボックス
+ */
 class Messagebox {
 	protected const con_x = 21;
 	public const con_y = 16;
@@ -9,6 +12,10 @@ class Messagebox {
 
 	protected $list = [];
 
+	/**
+	 * メッセージを表示する
+	 * @return void
+	 */
 	public function display(){
 		$bar = Utils::makeBar( self::width );
 		Cui::locate(self::con_x,self::con_y); echo "┌{$bar}┐";
@@ -25,6 +32,9 @@ class Messagebox {
 		Cui::locate(self::con_x, self::con_y + self::height ); echo "└{$bar}┘";
 	}
 	
+	/**
+	 * メッセージを追加する
+	 */
 	public function Add( string $str ) {
 		$this->list[] = $str;
 		if( count( $this->list) > self::height ) {
@@ -32,6 +42,10 @@ class Messagebox {
 		}
 	}
 
+	/**
+	 * メッセージをクリアする
+	 * @return void
+	 */
 	public function Cls() {
 		$this->list = [];
 	}
