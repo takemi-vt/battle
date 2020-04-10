@@ -8,19 +8,17 @@ namespace takemi\games\battle\libs;
 class Enum {
 	protected $scalar;
 
-	public function __construct($value)
-	{
+	public function __construct( $value ) {
 		$ref = new \ReflectionObject($this);
 		$consts = $ref->getConstants();
-		if (! in_array($value, $consts, true)) {
+		if ( !array_key_exists( $value, $consts ) ) {
 			throw new \InvalidArgumentException;
 		}
 
-		$this->scalar = $value;
+		$this->scalar = $consts[$value];
 	}
 
-	final public static function __callStatic($label, $args)
-	{
+	final public static function __callStatic($label, $args) {
 		$class = get_called_class();
 		$const = constant("$class::$label");
 		return new $class($const);

@@ -1,7 +1,7 @@
 <?php
 namespace takemi\games\battle\libs\Charactor;
 
-use takemi\games\battle\Messagebox;
+use takemi\games\battle\libs\Messagebox;
 use JsonSerializable;
 
 /**
@@ -32,9 +32,15 @@ class Chara implements JsonSerializable{
 	 */
 	public	$buf_status = null;
 
+	/**
+	 * @var array 魔法スロット
+	 */
+	public $magics = null;
+
 	protected const command_attack = 1;
 	protected const command_diffence = 2;
 	protected const command_charge = 3;
+	protected const command_magics = 4;
 
 	/**
 	 * @var CharaStatus キャラクターのステータス
@@ -138,6 +144,9 @@ class Chara implements JsonSerializable{
 
 			case self::command_charge : //ためる
 				$this->Chage( $char, $message );
+				break;
+
+			case self::command_magics:
 				break;
 		}
 	}
