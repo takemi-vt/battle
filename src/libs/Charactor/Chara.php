@@ -126,8 +126,15 @@ class Chara implements JsonSerializable{
 	 * ユーザの入力したコマンドを実行
 	 * @return void
 	 */
-	public function Command( int $cmd, Chara &$char, Messagebox &$message ) {
+	public function Command( string $cmd, Chara &$char, Messagebox &$message ) {
 		$message->Cls();
+
+		$mg = '';
+		if( strpos( ':', $cmd) !== false ) {
+			$tmp = explode(':', $cmd );
+			$cmd = $tmp[0];
+			$mg = $tmp[1];
+		}
 
 		switch( $cmd ) {
 			case Command::command_attack : //攻撃
@@ -143,6 +150,8 @@ class Chara implements JsonSerializable{
 				break;
 
 			case Command::command_magics:
+				$magic = $this->magics->GetMagic( intval($mg) );
+				//$magic->Command( $this, $char, $message );
 				break;
 		}
 	}
