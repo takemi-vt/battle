@@ -1,6 +1,8 @@
 <?php
 namespace takemi\games\battle\libs\Magics;
 
+use takemi\games\battle\libs\Messagebox;
+use takemi\games\battle\libs\Charactor\Chara;
 use takemi\games\battle\libs\Charactor\CharaStatus;
 
 /**
@@ -28,7 +30,11 @@ class Magic {
 	 */
 	public $status = null;
 
-	public $damage = 0;
+	/**
+	 * 魔法ダメージ
+	 * @var integer
+	 */
+	public $damege = 0;
 
 	/**
 	 * JSONファイルから読み込み
@@ -40,7 +46,7 @@ class Magic {
 		$this->name = $tmp->name;
 		$this->type = new MagicType( $tmp->type );
 		$this->attribute = new MagicAttribute( (array)$tmp->attribute );
-		$this->damage = $tmp->damage ?? 0;
+		$this->damege = $tmp->damege ?? 0;
 		$this->status = new CharaStatus();
 		$this->status->SetArray( (array)$tmp->status );
 	}
@@ -53,12 +59,15 @@ class Magic {
 	 * @return void
 	 */
 	public function Command( Chara $src, Chara $trg, Messagebox $messagebox ) {
-		$messagebox->Add( $this->name.'を唱えた！' );
+		$src->status->mp += $this->status->mp;
+		$messagebox->Add( "{$src->name}は {$this->name} を唱えた！" );
+		$messagebox->display();
 		usleep( 50000 );
-		switch( $this->type ) {
+
+		switch( $this->type->valueOf() ) {
 			case MagicType::attack:
-				$src->status->hp -= $this->damage;
-				$messagebox->Add( $trg->name.'に'.$this->damage.'のダメージ' );
+				$trg->status->hp -= $this->damege;
+				$messagebox->Add( $trg->name.'に'.$this->damege.'のダメージ' );
 				break;
 
 			case MagicType::recovery:
@@ -70,6 +79,7 @@ class Magic {
 			case MagicType::status:
 				break;
 		}
+		$messagebox->display();
 		usleep( 50000 );
 	}
 }
