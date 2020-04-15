@@ -2,6 +2,6 @@
 	"name" : "メ○",
 	"type" : "attack",
 	"damege" : 30,
-	"status":{"hp": 0,"mp": 0 ,"str":0,"vit":0,"agi":0,"dex":0,"int":0,"luk":0},
+	"status":{"hp": 0,"mp": -15 ,"str":0,"vit":0,"agi":0,"dex":0,"int":0,"luk":0},
 	"attribute" : { "flame" : 30, "water" : 0, "earch" : 0, "wind": 0 }
 }
