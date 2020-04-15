@@ -7,6 +7,7 @@ require_once __DIR__.'\Cui.php';
 require_once __DIR__.'\Enum.php';
 require_once __DIR__.'\Messagebox.php';
 require_once __DIR__.'\Utils.php';
+require_once __DIR__.'\Charactor\Command.php';
 require_once __DIR__.'\Charactor\Chara.php';
 require_once __DIR__.'\Charactor\CharaStatus.php';
 require_once __DIR__.'\Charactor\Player.php';

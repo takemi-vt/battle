@@ -9,15 +9,15 @@ class MagicType extends Enum {
 	/**
 	 * 回復
 	 */
-	const recovery = 1;
+	public const recovery = 1;
 
 	/**
 	 * 攻撃
 	 */
-	const attack = 2;
+	public const attack = 2;
 
 	/**
 	 * ステータス向上(バフ)
 	 */
-	const status = 3;
+	public const status = 3;
 }	

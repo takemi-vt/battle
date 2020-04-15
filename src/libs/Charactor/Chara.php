@@ -1,8 +1,10 @@
 <?php
 namespace takemi\games\battle\libs\Charactor;
 
-use takemi\games\battle\libs\Messagebox;
 use JsonSerializable;
+use takemi\games\battle\libs\Messagebox;
+use takemi\games\battle\libs\Charactor\Command;
+use takemi\games\battle\libs\Magics\Magic;
 
 /**
  * キャラクター情報
@@ -36,11 +38,6 @@ class Chara implements JsonSerializable{
 	 * @var array 魔法スロット
 	 */
 	public $magics = null;
-
-	protected const command_attack = 1;
-	protected const command_diffence = 2;
-	protected const command_charge = 3;
-	protected const command_magics = 4;
 
 	/**
 	 * @var CharaStatus キャラクターのステータス
@@ -130,23 +127,25 @@ class Chara implements JsonSerializable{
 	 * ユーザの入力したコマンドを実行
 	 * @return void
 	 */
-	public function Command( int $cmd, Chara &$char, Messagebox &$message ) {
+	public function Command( Command $cmd, Chara &$char, Messagebox &$message ) {
 		$message->Cls();
 
-		switch( $cmd ) {
-			case self::command_attack : //攻撃
+		switch( $cmd->Get() ) {
+			case Command::command_attack : //攻撃
 				$this->Attack( $char, $message );
 				break;
 
-			case self::command_diffence : //防御
+			case Command::command_diffence : //防御
 				$this->Diffence( $char, $message );
 				break;
 
-			case self::command_charge : //ためる
+			case Command::command_charge : //ためる
 				$this->Chage( $char, $message );
 				break;
 
-			case self::command_magics:
+			case Command::command_magics:
+				$magic = $this->magics->GetMagic( $cmd->GetMagic() );
+				$magic->Command( $this, $char, $message );
 				break;
 		}
 	}

@@ -6,6 +6,7 @@
 namespace takemi\games\battle;
 
 use takemi\games\battle\libs\Charactor\CharaStatus;
+use takemi\games\battle\libs\Charactor\Command;
 use takemi\games\battle\libs\Charactor\Monster;
 use takemi\games\battle\libs\Charactor\Player;
 use takemi\games\battle\libs\Cui;
@@ -255,6 +256,7 @@ function battle() {
 		$player->Command( getCommand( $player, $message ), $monster, $message );
 		if( $monster->isAlive() == false ) {
 			$loop = false;
+			$player->display();
 			usleep( 30000 );
 			$message->Add("");
 			$message->Add("{$monster->name}を倒した！！！！");
@@ -263,8 +265,9 @@ function battle() {
 		}
 		usleep( 100000 );
 		$cmd = rand(1,3);
-		$monster->Command( $cmd, $player, $message );
+		$monster->Command( new Command( $cmd ), $player, $message );
 		if( $player->isAlive() == false ) {
+			$player->display();
 			$loop = false;
 			usleep( 30000 );
 			$message->Add("");
@@ -280,7 +283,7 @@ function battle() {
 
 /**
  * ユーザからのコマンドを受け付ける
- * @return int
+ * @return Command
  */
 function getCommand( Player $player, Messagebox $message ) {
 	$loop = true;
@@ -295,6 +298,7 @@ function getCommand( Player $player, Messagebox $message ) {
 		Cui::strColor( "1 - {$max} の間の数値を入力してください", 'red');
 		Cui::LineUp( 1 );
 	}
+	$command = new Command($cmd);
 	//魔法の場合
 	if( $cmd == 4 ) {
 		$max = $player->magics->Has() + 1;
@@ -306,9 +310,9 @@ function getCommand( Player $player, Messagebox $message ) {
 			Cui::strColor( "1 - {$max} の間の数値を入力してください", 'red');
 			Cui::LineUp( 1 );
 		}
-		$cmd = "{$cmd}:{$mag}";
+		$command->SetMagicCommand( intval($mag) );
 	}
-	return $cmd;
+	return $command;
 }
 
 /**

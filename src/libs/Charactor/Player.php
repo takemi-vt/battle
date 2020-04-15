@@ -60,6 +60,7 @@ class Player extends Chara {
 
 		$bar = Utils::makeBar( $py_disp_len - 2 );
 
+		Cui::locate(0,0);
 		echo "┌{$bar}┐\n";
 		echo "│ ".str_pad($this->name,$py_disp_len-4)." │\n";
 		echo "├{$bar}┤\n";
